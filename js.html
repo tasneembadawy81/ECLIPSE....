@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ECLIPSE Jewelry</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+                       html {
+            scroll-padding-top: 90px;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background-color: #f8f6f2;
+            color: #222;
+        }
+
+        /* ==================== */
+        /* Navbar */
+        /* ==================== */
+
+                header {
+            z-index: 100;
+            width: 100%;       
+            width: 100%;
+            padding: 20px 60px;
+            background-color: #222;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-bottom: 2px solid #b08d57;
+             position: sticky;
+            top: 0;
+        }
+
+        .logo {
+            
+            color: #b08d57;
+            font-size: 25px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+                nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #b08d57;
+        }
+
+        .icons {
+            display: flex;
+            gap: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+                 #cartIcon {
+            display: none;
+            position: relative;
+        }
+
+        .cart-count {
+            display: none;
+            position: absolute;
+            top: -8px;
+            right: -10px;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 4px;
+            box-sizing: border-box;
+            border-radius: 9px;
+            background-color: #b08d57;
+            color: white;
+            font-size: 12px;
+            line-height: 18px;
+            text-align: center;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            padding: 12px 24px;
+            background-color: #222;
+            color: white;
+            border-left: 4px solid #b08d57;
+            font-size: 15px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+                /* ==================== */
+        /* Product Details Window */
+        /* ==================== */
+
+        .product-card {
+            cursor: pointer;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1500;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-box {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            z-index: 1;
+            border: none;
+            background: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #b08d57;
+        }
+
+        .modal-image {
+            flex: 1 1 300px;
+            min-height: 300px;
+            background-color: #eee;
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-info {
+            flex: 1 1 300px;
+            padding: 35px 30px;
+        }
+
+        .modal-info h2 {
+            margin-bottom: 8px;
+        }
+
+        .modal-category {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .modal-price {
+            font-size: 22px;
+            font-weight: bold;
+            color: #b08d57;
+            margin-bottom: 15px;
+        }
+
+        .modal-description {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 25px;
+        }
+
+        .modal-add {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            background-color: #222;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .modal-add:hover {
+            background-color: #b08d57;
+        }
+
+
+        /* ==================== */
+        /* Hero */
+        /* ==================== */
+
+        .hero {
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: #e9e2d7;
+            padding: 40px;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 25px;
+        }
+
+        .shop-btn {
+            padding: 13px 30px;
+            border: none;
+            background-color: #222;
+            color: white;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .shop-btn:hover {
+            background-color: #b08d57;
+        }
+
+
+        /* ==================== */
+        /* Products */
+        /* ==================== */
+
+        .products-section {
+            padding: 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+
+        /* ==================== */
+        /* Search */
+        /* ==================== */
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 35px;
+        }
+
+        .search-box input {
+            width: 400px;
+            padding: 13px 18px;
+            border: 1px solid #ccc;
+            outline: none;
+            border-radius: 5px;
+        }
+
+
+        /* ==================== */
+        /* Product Cards */
+        /* ==================== */
+
+        .products-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 230px;
+            background-color: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-card h3 {
+            margin-bottom: 8px;
+        }
+
+        .category {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .add-cart {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background-color: #222;
+            color: white;
+            cursor: pointer;
+        }
+
+        .favorite {
+            width: 42px;
+            border: 1px solid #ddd;
+            background-color: white;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .favorite.active {
+            color: red;
+        }
+                .filter-bar {
+            max-width: 1200px;
+            margin: 20px auto 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 9px 20px;
+            border: 1px solid #222;
+            background-color: white;
+            color: #222;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .filter-btn:hover {
+            border-color: #b08d57;
+            color: #b08d57;
+        }
+
+        .filter-btn.active {
+            background-color: #222;
+            border-color: #222;
+            color: white;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            color: #888;
+        }
+
+
+        /* ==================== */
+        /* Cart */
+        /* ==================== */
+
+        .cart-box {
+            display: none;
+            width: 80%;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .cart-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-box h3 {
+            margin-top: 20px;
+        }
+                .checkout-btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 13px;
+            border: none;
+            background-color: #222;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            background-color: #b08d57;
+        }
+                .checkout-box {
+            display: none;
+            width: 80%;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .checkout-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .checkout-box label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .checkout-box input,
+        .checkout-box textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .checkout-box input:focus,
+        .checkout-box textarea:focus {
+            border-color: #b08d57;
+        }
+
+        .checkout-box textarea {
+            resize: vertical;
+        }
+
+        .back-btn {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 13px;
+            border: 1px solid #222;
+            background-color: white;
+            color: #222;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            border-color: #b08d57;
+            color: #b08d57;
+        }
+                .checkout-error {
+            color: #b00020;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+        .checkout-error:empty {
+            display: none;
+        }
+                .confirm-box {
+            display: none;
+            width: 80%;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .confirm-box h2 {
+            color: #b08d57;
+            margin-bottom: 20px;
+        }
+
+        .confirm-box p {
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .demo-note {
+            color: #888;
+            font-size: 13px !important;
+        }
+
+
+        /* ==================== */
+        /* Login */
+        /* ==================== */
+
+               .login-box {
+            display: none;
+            position: fixed;
+            top: 90px;
+            right: 30px;
+            z-index: 1000;
+            width: 350px;
+            max-width: 90%;
+            box-sizing: border-box;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .login-box .login-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            width: auto;
+            padding: 4px 8px;
+            border: none;
+            background: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .login-box .login-close:hover {
+            color: #b08d57;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #loginMessage {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .site-footer {
+            margin-top: 60px;
+            padding: 50px 60px 20px;
+            background-color: #222;
+            color: #ddd;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            letter-spacing: 2px;
+            color: #b08d57;
+            margin-bottom: 12px;
+        }
+
+        .footer-column h4 {
+            color: #b08d57;
+            margin-bottom: 15px;
+        }
+
+        .footer-column p {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .footer-column a {
+            display: block;
+            margin-bottom: 8px;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .footer-column a:hover {
+            color: #b08d57;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 35px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+        }
+                /* ==================== */
+        /* Why ECLIPSE */
+        /* ==================== */
+
+        .features-section {
+            padding: 20px 60px 0;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            padding: 30px 20px;
+            background-color: white;
+            border-radius: 8px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 8px;
+            color: #b08d57;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+        }
+        
+
+
+        /* ==================== */
+        /* Responsive */
+        /* ==================== */
+
+        @media (max-width: 1000px) {
+
+            .products-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+                .login-box {
+                top: 20px;
+                right: 5%;
+            }
+            header {
+                position: static;
+                padding: 20px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 35px;
+            }
+
+            .products-section {
+                padding: 30px 20px;
+            }
+
+            .products-container {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+
+        }
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #b08d57;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+}
+
+.checkout-btn:hover {
+    background-color: #222;
+}
+        /* ==================== */
+        /* Customer Reviews */
+        /* ==================== */
+
+        .reviews-section {
+            padding: 60px 60px 0;
+        }
+
+        .reviews-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .review-card {
+            padding: 30px 25px;
+            background-color: white;
+            border-radius: 8px;
+            border-top: 3px solid #b08d57;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .review-stars {
+            color: #b08d57;
+            font-size: 22px;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+
+        .review-text {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .review-name {
+            font-weight: bold;
+            font-size: 14px;
+            color: #222;
+        }
+        /* ==================== */
+        /* Smooth Animations */
+        /* ==================== */
+
+        /* Smooth hover on buttons and links */
+
+        nav a,
+        .shop-btn,
+        .add-cart,
+        .favorite,
+        .filter-btn,
+        .checkout-btn,
+        .back-btn,
+        .modal-add,
+        .modal-close,
+        .login-close,
+        .login-box button,
+        .quantity-btn,
+        .remove-cart,
+        .footer-column a {
+            transition:
+                background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+
+        /* Animations used below */
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+
+        /* Boxes that open: cart, checkout, confirmation, login */
+
+        .cart-box,
+        .checkout-box,
+        .confirm-box,
+        .login-box {
+            animation: fadeSlideUp 0.4s ease;
+        }
+
+
+        /* Product details window */
+
+        .modal-overlay.show {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-box {
+            animation: fadeSlideUp 0.35s ease;
+        }
+
+
+        /* Product cards fade in (also after using the filters) */
+
+        .product-card {
+            animation: fadeIn 0.4s ease;
+        }
+
+
+        /* Respect people who turned animations off on their device */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+
+        }        /* ==================== */
+        /* Smooth Animations */
+        /* ==================== */
+
+        /* Smooth hover on buttons and links */
+
+        nav a,
+        .shop-btn,
+        .add-cart,
+        .favorite,
+        .filter-btn,
+        .checkout-btn,
+        .back-btn,
+        .modal-add,
+        .modal-close,
+        .login-close,
+        .login-box button,
+        .quantity-btn,
+        .remove-cart,
+        .footer-column a {
+            transition:
+                background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease;
+        }
+
+
+        /* Animations used below */
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+
+        /* Boxes that open: cart, checkout, confirmation, login */
+
+        .cart-box,
+        .checkout-box,
+        .confirm-box,
+        .login-box {
+            animation: fadeSlideUp 0.4s ease;
+        }
+
+
+        /* Product details window */
+
+        .modal-overlay.show {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-overlay.show .modal-box {
+            animation: fadeSlideUp 0.35s ease;
+        }
+
+
+        /* Product cards fade in (also after using the filters) */
+
+        .product-card {
+            animation: fadeIn 0.4s ease;
+        }
+
+
+        /* Respect people who turned animations off on their device */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+
+        }
+                /* ==================== */
+        /* Mobile Responsive */
+        /* ==================== */
+
+        /* Tablets */
+
+        @media (max-width: 768px) {
+
+            header {
+                padding: 20px 30px;
+            }
+
+            nav {
+                gap: 20px;
+            }
+
+            .products-section {
+                padding: 40px 30px;
+            }
+
+            .features-section {
+                padding: 20px 30px 0;
+            }
+
+            .reviews-section {
+                padding: 40px 30px 0;
+            }
+
+            .site-footer {
+                padding: 40px 30px 20px;
+            }
+
+        }
+
+
+        /* Phones */
+
+        @media (max-width: 600px) {
+
+            html {
+                scroll-padding-top: 10px;
+            }
+
+            /* Header: logo and icons on top, links below */
+
+            header {
+                position: static;
+                flex-direction: row;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 12px;
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .icons {
+                gap: 15px;
+                font-size: 18px;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+                align-items: center;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                justify-content: space-between;
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 14px;
+            }
+
+            /* Hero */
+
+            .hero {
+                min-height: 300px;
+                padding: 30px 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            /* Sections */
+
+            .products-section {
+                padding: 30px 15px;
+            }
+
+            .features-section {
+                padding: 20px 20px 0;
+            }
+
+            .reviews-section {
+                padding: 40px 20px 0;
+            }
+
+            .site-footer {
+                padding: 40px 20px 20px;
+            }
+
+            /* Search and filters */
+
+            .search-box input {
+                width: 100%;
+                font-size: 16px;
+            }
+
+            .filter-bar {
+                gap: 8px;
+            }
+
+            .filter-btn {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+
+            /* Product cards: two per row */
+
+            .products-container {
+                width: 100%;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .product-card {
+                padding: 10px;
+            }
+
+            .product-image {
+                height: 150px;
+                margin-bottom: 10px;
+            }
+
+            .product-card h3 {
+                font-size: 15px;
+            }
+
+            .category {
+                font-size: 12px;
+            }
+
+            .price {
+                font-size: 16px;
+                margin-bottom: 10px;
+            }
+
+            .add-cart {
+                padding: 9px 4px;
+                font-size: 13px;
+            }
+
+            .favorite {
+                width: 36px;
+            }
+
+            /* Cart, checkout, confirmation */
+
+            .cart-box,
+            .checkout-box,
+            .confirm-box {
+                width: 92%;
+                margin: 25px auto;
+                padding: 18px;
+            }
+
+            .cart-item {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .quantity-btn,
+            .remove-cart {
+                min-height: 30px;
+                padding: 4px 10px;
+            }
+
+            .quantity-btn {
+                min-width: 30px;
+            }
+
+            .checkout-box input,
+            .checkout-box textarea,
+            .login-box input {
+                font-size: 16px;
+            }
+
+            /* Login box */
+
+            .login-box {
+                top: 15px;
+                left: 4%;
+                right: 4%;
+                width: auto;
+                max-width: none;
+            }
+
+            /* Product details window */
+
+            .modal-box {
+                width: 94%;
+                max-height: 92vh;
+            }
+
+            .modal-image {
+                flex: 0 0 100%;
+                height: 240px;
+                min-height: 0;
+            }
+
+            .modal-info {
+                flex: 1 1 100%;
+                padding: 22px 20px;
+            }
+
+            .modal-close {
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.9);
+            }
+
+            /* Message */
+
+            .toast {
+                bottom: 20px;
+                max-width: 90%;
+                text-align: center;
+                font-size: 14px;
+            }
+
+        }
+
+
+        /* Very small phones: one card per row */
+
+        @media (max-width: 359px) {
+
+            .products-container {
+                grid-template-columns: 1fr;
+            }
+
+        }
+                /* ==================== */
+        /* Bigger tap areas on phones */
+        /* ==================== */
+
+        @media (max-width: 600px) {
+
+            .icons {
+                gap: 0;
+            }
+
+            .icons > span {
+                padding: 11px;
+            }
+
+            #loginLink,
+            #logoutLink,
+            #userGreeting {
+                font-size: 14px;
+            }
+
+            #userGreeting {
+                max-width: 110px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+
+            .cart-count {
+                top: 4px;
+                right: 0;
+            }
+
+        }
+                /* ==================== */
+        /* Tap feedback on touch screens */
+        /* ==================== */
+
+        .add-cart,
+        .favorite,
+        .filter-btn,
+        .checkout-btn,
+        .back-btn,
+        .modal-add {
+            transition:
+                background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease,
+                transform 0.15s ease;
+        }
+
+        .product-card:active {
+            transform: scale(0.97);
+        }
+
+        .add-cart:active,
+        .favorite:active,
+        .filter-btn:active,
+        .checkout-btn:active,
+        .back-btn:active,
+        .modal-add:active {
+            transform: scale(0.95);
+        }
+                /* ==================== */
+        /* Touch screens: no sticky hover, no text selection on icons */
+        /* ==================== */
+
+        @media (hover: none) {
+
+            .product-card:hover,
+            .feature-card:hover,
+            .review-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+        }
+
+        .icons,
+        nav,
+        .filter-bar,
+        .card-buttons {
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================== -->
+    <!-- Navbar -->
+    <!-- ==================== -->
+
+    <header>
+
+        <div class="logo">
+            ECLIPSE
+        </div>
+
+
+        <nav>
+
+            <a href="#">
+                Home
+            </a>
+
+            <a href="#products">
+                Shop
+            </a>
+
+            <a href="#">
+                Favorites
+            </a>
+
+            
+
+        </nav>
+
+
+        <div class="icons">
+
+            <span id="loginLink">
+                Login
+            </span>
+
+            <span id="userGreeting" style="display: none;">
+            </span>
+
+            <span id="logoutLink" style="display: none;">
+                Logout
+            </span>
+
+            <span>
+                ♡
+            </span>
+
+                        <span id="cartIcon">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </span>
+        </div>
+
+    </header>
+
+
+    <!-- ==================== -->
+    <!-- Hero -->
+    <!-- ==================== -->
+
+    <section class="hero">
+
+        <div>
+
+            <h1>
+                Timeless Elegance
+            </h1>
+
+            <p>
+                Discover our beautiful collection of jewelry.
+            </p>
+
+            <button class="shop-btn" onclick="scrollToProducts()">
+                Shop Now
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================== -->
+    <!-- Products Section -->
+    <!-- ==================== -->
+
+    <section class="products-section" id="products">
+
+
+        <div class="section-title">
+
+            <h2>
+                Our Collection
+            </h2>
+
+            <p>
+                Find the perfect piece for every occasion.
+            </p>
+
+        </div>
+
+
+        <!-- Search -->
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search for a product..."
+            >
+
+        </div>
+        
+
+        
+
+
+        <!-- Category Filters -->
+
+        <div class="filter-bar">
+
+            <button class="filter-btn active" data-category="all">
+                All
+            </button>
+
+            <button class="filter-btn" data-category="rings">
+                Rings
+            </button>
+
+            <button class="filter-btn" data-category="necklaces">
+                Necklaces
+            </button>
+
+            <button class="filter-btn" data-category="earrings">
+                Earrings
+            </button>
+
+            <button class="filter-btn" data-category="bracelets">
+                Bracelets
+            </button>
+
+            <button class="filter-btn" data-category="watches">
+                Watches
+            </button>
+
+        </div>
+
+        <p class="no-results" id="noResults">
+            No products found.
+        </p>
+
+
+        <!-- ==================== -->
+        <!-- Products 1 - 4 -->
+        <!-- ==================== -->
+
+        <div class="products-container">
+
+
+            <!-- Product 1 -->
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="images/(Set Of 3) Women Non-Fading Rings, Stylish Personalized Tarnish-Resistant Ring Set.jpg"
+                        alt="Golden Necklace"
+                    >
+
+                </div>
+
+                <h3>
+                    Gold Ring Set
+                </h3>
+
+                <p class="category">
+                    Rings
+                </p>
+
+                <p class="price">
+                    $120
+                </p>
+
+                <div class="card-buttons">
+
+                    <button class="add-cart">
+                        Add to Cart
+                    </button>
+
+                    <button class="favorite">
+                        ♡
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 2 -->
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="images/Cushion Crystal Pendant Necklace – Bezel Set Stone & Gold Silk Aesthetic.jpg"
+                        alt="Elegant Ring"
+                    >
+
+                </div>
+
+                <h3>
+                    Crystal Pendant Necklace
+                </h3>
+
+                <p class="category">
+                    Necklaces
+                </p>
+
+                <p class="price">
+                    $85
+                </p>
+
+                <div class="card-buttons">
+
+                    <button class="add-cart">
+                        Add to Cart
+                    </button>
+
+                    <button class="favorite">
+                        ♡
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 3 -->
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="images/download (30).jpg"
+                        alt="Diamond Earrings"
+                    >
+
+                </div>
+
+                <h3>
+                    Heart bracelet
+                </h3>
+
+                <p class="category">
+                    Bracelet
+                </p>
+
+                <p class="price">
+                    $150
+                </p>
+
+                <div class="card-buttons">
+
+                    <button class="add-cart">
+                        Add to Cart
+                    </button>
+
+                    <button class="favorite">
+                        ♡
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 4 -->
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="images/Modern Elegance_ Gold Geometric Drop Dangle Earrings.jpg"
+                        alt="Classic Bracelet"
+                    >
+
+                </div>
+
+                <h3>
+                    Gold Geometric Drop Earrings
+                </h3>
+
+                <p class="category">
+                    Earrings
+                </p>
+
+                <p class="price">
+                    $100
+                </p>
+
+                <div class="card-buttons">
+
+                    <button class="add-cart">
+                        Add to Cart
+                    </button>
+
+                    <button class="favorite">
+                        ♡
+                    </button>
+
+                </div>
+
+            </div>
+
+    
+        
+
+        <!-- ==================== -->
+        <!-- Products 5 - 8 -->
+        <!-- ==================== -->
+
+        
+
+
+            <!-- Product 5 -->
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="images/Black Velvet Bow Tassel Earrings.jpg"
+                        alt="Silver Necklace"
+                    >
+
+                </div>
+
+                <h3>
+                    Black Velvet Bow Tassel Earrings
+                </h3>
+
+                <p class="category">
+                    Earrings
+                </p>
+
+                <p class="price">
+                    $150
+                </p>
+
+                <div class="card-buttons">
+
+                    <button class="add-cart">
+                        Add to Cart
+                    </button>
+
+                    <button class="favorite">
+                        ♡
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 6 -->
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="images/Minimal Gold Ring for an Everyday Look ✨.jpg"
+                        alt="Golden Earrings"
+                    >
+
+                </div>
+
+                <h3>
+                    Minimal Gold Ring
+                </h3>
+
+                <p class="category">
+                    Rings
+                </p>
+
+                <p class="price">
+                    $200
+                </p>
+
+                <div class="card-buttons">
+
+                    <button class="add-cart">
+                        Add to Cart
+                    </button>
+
+                    <button class="favorite">
+                        ♡
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 7 -->
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="images/Vintage Watch Collection – Timeless Elegance.jpg"
+                        alt="Silver Bracelet"
+                    >
+
+                </div>
+
+                <h3>
+                    Vintage Watch Collection
+                </h3>
+
+                <p class="category">
+                    Watches
+                </p>
+
+                <p class="price">
+                    $180
+                </p>
+
+                <div class="card-buttons">
+
+                    <button class="add-cart">
+                        Add to Cart
+                    </button>
+
+                    <button class="favorite">
+                        ♡
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Product 8 -->
+
+            <div class="product-card">
+
+                <div class="product-image">
+
+                    <img
+                        src="images/This Ivy House_ Photo.jpg"
+                        alt="Gold Ring"
+                    >
+
+                </div>
+
+                <h3>
+                    Gold Chain Bracelet
+                </h3>
+
+                <p class="category">
+                    Bracelet
+                </p>
+
+                <p class="price">
+                    $130
+                </p>
+
+                <div class="card-buttons">
+
+                    <button class="add-cart">
+                        Add to Cart
+                    </button>
+
+                    <button class="favorite">
+                        ♡
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==================== -->
+        <!-- Cart -->
+        <!-- ==================== -->
+
+        <div class="cart-box" id="cartBox">
+
+            <h2>
+                Your Cart
+            </h2>
+
+            <div id="cartItems">
+
+                <p>
+                    Your cart is empty.
+                </p>
+
+            </div>
+            <h3>
+                Total: $<span id="cartTotal">0</span>
+            </h3>
+
+                            <button class="checkout-btn" id="checkoutButton">
+                Proceed to Checkout
+            </button>
+
+            <p class="checkout-error" id="cartMessage"></p>
+
+        </div>
+
+
+        <!-- ==================== -->
+        <!-- Checkout Form -->
+        <!-- ==================== -->
+
+        <div class="checkout-box" id="checkoutBox">
+
+            <h2>
+                Checkout
+            </h2>
+
+            <label for="checkoutName">
+                Full Name
+            </label>
+            <input
+                type="text"
+                id="checkoutName"
+                placeholder="Your full name"
+            >
+
+            <label for="checkoutPhone">
+                Phone Number
+            </label>
+            <input
+                type="tel"
+                id="checkoutPhone"
+                placeholder="Your phone number"
+            >
+
+            <label for="checkoutAddress">
+                Delivery Address
+            </label>
+            <textarea
+                id="checkoutAddress"
+                rows="3"
+                placeholder="Street, building, city"
+                        ></textarea>
+
+            <p class="checkout-error" id="checkoutMessage"></p>
+
+            <button class="checkout-btn" id="placeOrderButton">
+                Place Order
+            </button>
+
+                       <button class="back-btn" id="backToCartButton">
+                Back to Cart
+            </button>
+
+        </div>
+
+
+                <!-- ==================== -->
+        <!-- Order Confirmation -->
+        <!-- ==================== -->
+
+        <div class="confirm-box" id="confirmBox">
+
+            <h2>
+                Thank you for your order!
+            </h2>
+
+            <p>
+                Order number:
+                <strong id="orderNumber"></strong>
+            </p>
+
+            <p>
+                Order total: $<strong id="orderTotal"></strong>
+            </p>
+
+            <p>
+                Delivery to:
+                <strong id="orderCustomer"></strong>
+            </p>
+
+            <p class="demo-note">
+                This is a demo store. No payment was taken
+                and the order was not saved.
+            </p>
+
+            <button class="checkout-btn" id="backToShopButton">
+                Back to Shop
+            </button>
+
+        </div>
+    </section>
+        
+        <!-- ==================== -->
+    <!-- Why ECLIPSE -->
+    <!-- ==================== -->
+
+    <section class="features-section">
+
+        <div class="section-title">
+
+            <h2>
+                Why ECLIPSE?
+            </h2>
+
+            <p>
+                Little things that make shopping with us easy.
+            </p>
+
+        </div>
+
+
+        <div class="features-container">
+
+            <div class="feature-card">
+                <div class="feature-icon">🚚</div>
+                <h3>Fast Delivery</h3>
+                <p>Your order arrives at your door in a few days.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Quality Guarantee</h3>
+                <p>Every piece is checked before it leaves us.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎁</div>
+                <h3>Gift Wrapping</h3>
+                <p>Beautiful packaging, ready to give as a gift.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">↩️</div>
+                <h3>Easy Returns</h3>
+                <p>Changed your mind? Return within 14 days.</p>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- ==================== -->
+    <!-- Customer Reviews -->
+    <!-- ==================== -->
+
+    <section class="reviews-section">
+
+        <div class="section-title">
+
+            <h2>
+                What Our Customers Say
+            </h2>
+
+            <p>
+                Words from people who love their ECLIPSE pieces.
+            </p>
+
+        </div>
+
+
+        <div class="reviews-container">
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">
+                    "The ring looks even better in person. Lovely packaging too."
+                </p>
+                <p class="review-name">Sara M.</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">
+                    "I bought the necklace as a gift and she loved it."
+                </p>
+                <p class="review-name">Nour A.</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★☆</div>
+                <p class="review-text">
+                    "Fast delivery and the earrings are very light to wear."
+                </p>
+                <p class="review-name">Mariam K.</p>
+            </div>
+
+        </div>
+
+    </section>
+ <!-- ==================== -->
+    <!-- Footer -->
+    <!-- ==================== -->
+
+    <footer class="site-footer">
+
+        <div class="footer-container">
+
+            <div class="footer-column">
+
+                <h3 class="footer-logo">
+                    ECLIPSE
+                </h3>
+
+                <p>
+                    Timeless jewelry for every moment.
+                    Gold-toned pieces designed to be worn every day.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Quick Links
+                </h4>
+
+                <a href="#">Home</a>
+                <a href="#products">Shop</a>
+                <a href="#">Favorites</a>
+                <a href="#">Cart</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Contact
+                </h4>
+
+                <p>support@eclipse-jewelry.com</p>
+                <p>+20 100 000 0000</p>
+                <p>Cairo, Egypt</p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Follow Us
+                </h4>
+
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">TikTok</a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+            &copy; 2026 ECLIPSE Jewelry. All rights reserved.
+        </div>
+
+    </footer>
+
+
+
+    <!-- ==================== -->
+    <!-- Login -->
+    <!-- ==================== -->
+
+        <div class="login-box" id="loginBox">
+
+        <button class="login-close" id="loginClose" type="button">
+            ✕
+        </button>
+
+        <h2>
+            Login
+        </h2>
+
+        <input
+            type="text"
+            id="loginName"
+            placeholder="Your Name"
+        >
+
+        <input
+            type="email"
+            id="loginEmail"
+            placeholder="Email"
+        >
+
+        <input
+            type="password"
+            id="loginPassword"
+            placeholder="Password"
+        >
+
+        <button id="loginButton">
+            Login
+        </button>
+
+        <p id="loginMessage"></p>
+
+    </div>
+        <!-- ==================== -->
+    <!-- Product Details Window -->
+    <!-- ==================== -->
+
+    <div class="modal-overlay" id="productModal">
+
+        <div class="modal-box">
+
+            <button class="modal-close" id="modalClose" type="button">
+                ✕
+            </button>
+
+            <div class="modal-image">
+                <img id="modalImage" src="" alt="">
+            </div>
+
+            <div class="modal-info">
+
+                <h2 id="modalName"></h2>
+
+                <p class="modal-category" id="modalCategory"></p>
+
+                <p class="modal-price" id="modalPrice"></p>
+
+                <p class="modal-description" id="modalDescription"></p>
+
+                <button class="modal-add" id="modalAddButton" type="button">
+                    Add to Cart
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Toast message -->
+
+    <div class="toast" id="toast"></div>
+    
+
+    <script src="js/project.js"></script>
+
+</body>
+
+</html>
